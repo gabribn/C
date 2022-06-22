@@ -23,6 +23,7 @@ int main() {
       for(int i=0; i<SIZE; i++){
         free(matriz[i]);
       }
+      free(matriz);
      break;
     }
          
