@@ -16,6 +16,7 @@ struct cadastro {
 typedef struct cadastro veiculo;
 
 int validacaoAno(veiculo v1, int bissexto){
+  bissexto=0;
    if((v1.entrada.ano%400==0) || ((v1.entrada.ano%4==0)&&(v1.entrada.ano%100!=0))){
         bissexto =1;
     }
@@ -23,7 +24,8 @@ int validacaoAno(veiculo v1, int bissexto){
 }
 
 
-void validacaoMes(veiculo v1){
+
+void validacaoMes(veiculo v1){ 
     for(int i=0; i<1; i++){
         setbuf(stdin, NULL);
         scanf("%d", &v1.entrada.mes);
@@ -31,9 +33,61 @@ void validacaoMes(veiculo v1){
             printf("informe um mes valido\n");
             i--;
         }
+
     }
 }
-
+void validacaoDia(veiculo v1){
+  int bissexto, bi,aux;
+  bi= validacaoAno(v1,bissexto);
+  
+  if(v1.entrada.mes == 4||v1.entrada.mes == 6||v1.entrada.mes == 9||v1.entrada.mes == 11){
+    aux=30;
+    }
+  else if (v1.entrada.mes == 1||v1.entrada.mes ==3||v1.entrada.mes ==5||v1.entrada.mes ==7||v1.entrada.mes ==8||v1.entrada.mes ==10||v1.entrada.mes ==12){
+    aux=31;
+    }
+  
+  else if(v1.entrada.mes == 1||v1.entrada.mes ==3||v1.entrada.mes ==5||v1.entrada.mes ==7||v1.entrada.mes ==8||v1.entrada.mes ==10||v1.entrada.mes ==12){
+    aux=31;
+    }
+   else if(v1.entrada.mes == 2){
+    if(bi==1){
+      aux=29;
+    }
+     else{
+      aux=28;
+     }
+    }
+  
+  for(int i=0; i<1;i++){
+    setbuf(stdin, NULL);
+    scanf("%d", &v1.entrada.dia);
+    if(v1.entrada.dia>aux){
+      printf("dia invalio....\n");
+      i--;
+    }
+  }
+}
+void validacaoHora(veiculo v1) {
+    for(int i = 0; i < 1; i++) {
+        scanf("%d", &v1.entrada.hora);   
+        setbuf(stdin, NULL);
+        if(v1.entrada.hora <= 0 || v1.entrada.hora > 24) {
+            printf("Hora invalida....\n");
+            i--;
+        }
+    }
+}
+void validacaoMinutos(veiculo v1){
+  for(int i = 0; i < 1; i++) {
+        scanf("%d", &v1.entrada.min);   
+        setbuf(stdin, NULL);
+        if(v1.entrada.min <=0 || v1.entrada.min>59) {
+            printf("Minuto invalido....\n");
+            i--;
+        }
+    }
+}
 void inserir(FILE *f) {
     int bissexto = 0;
     int mes = 0;
@@ -54,9 +108,7 @@ void inserir(FILE *f) {
     printf("Ano=");
     setbuf(stdin, NULL);
     scanf("%d", &v1.entrada.ano);
-    if((v1.entrada.ano%400==0) || ((v1.entrada.ano%4==0)&&(v1.entrada.ano%100!=0))){
-        bissexto =1;
-    }
+   
 
     printf("mes=");
     validacaoMes(v1);
@@ -64,16 +116,13 @@ void inserir(FILE *f) {
 
 
     printf("dia=");
-    setbuf(stdin, NULL);
-    scanf("%d", &v1.entrada.dia);
+    validacaoDia(v1);
 
     printf("hora=");
-    setbuf(stdin, NULL);
-    scanf("%d", &v1.entrada.hora);
+    validacaoHora(v1);
 
     printf("minutos=");
-    setbuf(stdin, NULL);
-    scanf("%d", &v1.entrada.min);
+    validacaoMinutos(v1);
 
 }
 
